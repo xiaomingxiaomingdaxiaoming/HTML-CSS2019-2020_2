@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #inp{width: 450px;}
+    </style>
+</head>
+<body>
+    <h1>学生信息</h1>
+    <fieldset style="width: 400px;">
+        <legend style="color: red;">学生档案</legend>
+        <form id="homeworkform" name="testForm" method="GET" action="#S">
+            姓名：
+            <br>
+            <!-- 姓名设置为text文本输入框，涉及隐私，所以设置autocompleted="off"，可根据具体情境再进行该属性的设置 -->
+            <input type="text" name="testName" id="inp" placeholder="请输入姓名" autocomplete="off" required autofocus/>
+            <br>
+            学号：
+            <br>
+            <!-- 学号设置为number类型，涉及隐私，所以设置autocompleted="off" -->
+            <input type="number" name="testNum" id="inp" placeholder="请输入学号" required/>
+            <br>
+            手机号码：
+            <br>
+            <!-- 手机号码设置为tel类型 -->
+            <input type="tel" name="testPhonenum" id="inp" placeholder="请输入手机号" required/>
+            <br>
+            邮箱地址：
+            <br>
+            <!-- 邮箱设置为email类型 -->
+            <input type="email" name="testEmail" id="inp" placeholder="请输入邮箱地址" required/>
+            <br>
+            录取学校：
+            <br>
+            <!-- 学校设置search类型，并与datalist标签配合使用 -->
+            <input type="search" name="testSchool" id="inp" list="schools" autocomplete="off"/>
+            <datalist id="schools">
+                <option>河北师范大学</option>
+                <option>河北医科大学</option>
+                <option>河北经贸大学</option>
+                <option>河北地质大学</option>
+                <option>河北科技大学</option>
+            </datalist>
+            <br>
+            入学成绩：
+            <br>
+            <!-- 成绩设置为number类型 -->
+            <input type="number" name="testGrade" id="inp"/>
+            <br>
+            入学时间：
+            <br>
+            <!-- 入学时间设置为date类型 -->
+            <input type="date" name="testDate" id="inp"/>
+            <br>
+            <br>
+            <!-- 提交按钮 -->
+            <input type="submit" value="提交" style="width: 455px;"/>
+        </form>
+    </fieldset>
+</body>
+</html>
