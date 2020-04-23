@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        canvas {
+            border: 2px solid blue;
+        }
+        #box{
+            width: 100%;
+            height: 300px;
+            position: relative;
+            text-align: center;
+        }
+        #canvas1{
+            position: absolute;
+            margin-left: -250px;
+        }
+        #canvas2{
+            position: absolute; 
+            margin-left: -250px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box" onclick="getPos(event)">
+        <canvas id="canvas1" width="500" height="300" ></canvas>
+        <canvas id="canvas2" width="500" height="300" onmousedown="mouseDown(event)" onmousemove="mouseMove(event)" onmouseup="mouseUp(event)"></canvas>
+    </div>
+</body>
+<script>
+    var canvas1 = document.getElementById("canvas1");
+    var context1 = canvas1.getContext("2d");
+
+    var canvas2 = document.getElementById("canvas2");
+    var context2 = canvas2.getContext("2d");
+
+    var tag1=parseInt(Math.random() * 4);
+    var tag2;
+    var text;
+
+    //绘制文字层
+    switch(tag1) {
+        case 0:
+            text = "谢谢惠顾";
+            break;
+        case 1:
+            text = "一等奖";
+            break;
+        case 2:
+            text = "二等奖";
+            break;
+        case 3:
+            text = "三等奖";
+            break;
+    } 
+    context1.beginPath();
+    context1.font="100px 等线";
+    context1.textAlign="center";
+    context1.textBaseline="middle";
+    context1.fillStyle="red";
+    context1.fillText(text,250,150);
+    context1.closePath();
+
+    //绘制遮罩层
+    context2.beginPath();
+    context2.fillStyle='gray';
+    context2.fillRect(0,0,500,300);
+    context2.closePath();
+
+    //刮涂层
+    function getPos(event) {
+        var e = event || window.event;
+        var rect = canvas2.getBoundingClientRect();
+        ax=e.clientX-rect.left;
+        ay=e.clientY-rect.top;
+    }
+
+    function guagua(){
+        getPos(event);
+        context2.beginPath();
+        context2.globalCompositeOperation = "destination-out";
+        context2.arc(ax,ay,40,0,Math.PI*2);
+        context2.fill();
+        context2.closePath();
+        clearR()
+    }
+
+    function mouseDown(event){
+        guagua();
+        tag2=true;
+    }
+
+    function mouseUp(event){
+        tag2=false;
+    }
+
+    function mouseMove(event){
+        if(tag2){
+            guagua();
+        }
+    }
+    //刮掉大于60%遮罩层消失
+    function clearR(){
+        var imageData = context2.getImageData(0, 0, 500, 300);
+        var num=0;
+        var len=150000;
+        for(var i=0;i<len;i++){
+            if(imageData.data[4*i+3]===0){
+                num+=1;
+            }
+        }
+        if(num/150000>=0.6){
+            context2.clearRect(0,0,500,300);
+        }
+    }
+</script>
+</html>
